@@ -15,7 +15,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Project Manager",
+  title: "Task Vibe",
   description: "Created by Arush",
 };
 
