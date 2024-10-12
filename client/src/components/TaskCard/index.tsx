@@ -1,7 +1,7 @@
-import React, { useState } from "react";
 import Image from "next/image";
-import { format } from "date-fns";
 import { Task } from "@/state/api";
+import { format } from "date-fns";
+import React, { useState } from "react";
 import { FaFlag, FaUser, FaTags, FaThumbtack } from "react-icons/fa"; // Font Awesome Icons
 import {
   CalendarCheck2,
