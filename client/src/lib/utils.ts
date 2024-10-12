@@ -1,55 +1,83 @@
-export const dataGridClassNames = `
-  border border-gray-300 bg-white shadow-lg 
-  dark:border-gray-700 dark:bg-dark-secondary dark:text-gray-300 
-  rounded-lg overflow-hidden transition-all duration-300 ease-in-out
-`;
-
 export const dataGridSxStyles = (isDarkMode: boolean) => ({
   "& .MuiDataGrid-columnHeaders": {
-    backgroundColor: isDarkMode ? "#2e2e2e" : "#f3f4f6",
-    color: isDarkMode ? "#d1d5db" : "#374151",
+    background: isDarkMode
+      ? "linear-gradient(90deg, #2b2e4a, #1f1f3a)"
+      : "linear-gradient(90deg, #d1d5db, #111827)",
+    color: isDarkMode ? "#1f2937" : "#1e293b",
     fontWeight: "bold",
     textTransform: "uppercase",
-    letterSpacing: "0.07rem",
-    borderBottom: `2px solid ${isDarkMode ? "#424242" : "#d1d5db"}`,
-  },
-  '& [role="row"] > *': {
-    backgroundColor: isDarkMode ? "#1e1e1e" : "#ffffff",
-    borderColor: `${isDarkMode ? "#424242" : "#e5e7eb"}`,
-    transition: "background-color 0.3s ease-in-out",
-  },
-  "& .MuiDataGrid-cell": {
-    border: "none",
-    color: isDarkMode ? "#e0e0e0" : "#111827",
-    fontSize: "0.9rem",
-    fontWeight: "500",
-    "&:hover": {
-      backgroundColor: isDarkMode ? "#3a3a3a" : "#f3f4f6",
-      color: isDarkMode ? "#ffffff" : "#111827",
+    letterSpacing: "0.1rem",
+    padding: "0.75rem",
+    display: "flex",
+    alignItems: "center",
+    gap: "0.5rem",
+    borderBottom: `2px solid ${isDarkMode ? "#4e4e6e" : "#94a3b8"}`,
+    "& svg": {
+      fontSize: "1.2rem",
+      color: isDarkMode ? "#1f2937" : "#111827",
     },
   },
-  "& .MuiDataGrid-row:hover": {
-    backgroundColor: isDarkMode ? "#3a3a3a" : "#e5e7eb",
-    cursor: "pointer",
+
+  "& .MuiDataGrid-iconButtonContainer": {
+    display: "flex",
+    alignItems: "center",
+    gap: "0.5rem",
   },
+
+  "& .MuiDataGrid-cell": {
+    border: "none",
+    color: isDarkMode ? "#e0e7ff" : "#0f172a",
+    fontSize: "0.95rem",
+    fontWeight: "500",
+    transition: "background-color 0.3s, transform 0.2s ease",
+    "&:hover": {
+      backgroundColor: isDarkMode ? "#383b5b" : "#6b7280",
+      transform: "scale(1.02)",
+      color: isDarkMode ? "#fafafa" : "#0d0d0d",
+    },
+  },
+
+  "& .MuiDataGrid-row": {
+    transition: "background-color 0.3s ease-in-out, transform 0.2s",
+    "&:hover": {
+      backgroundColor: isDarkMode ? "#2e2e4e" : "#d1d5db",
+      transform: "translateX(5px)",
+      cursor: "pointer",
+    },
+  },
+
   "& .MuiIconButton-root": {
-    color: isDarkMode ? "#a3a3a3" : "#6b7280",
-    transition: "color 0.2s ease",
+    color: isDarkMode ? "#c3bafc" : "#5b647e",
+    transition: "color 0.2s, transform 0.2s ease",
+    "&:hover": {
+      color: isDarkMode ? "#e4e1fc" : "#1e293b",
+      transform: "rotate(15deg)",
+    },
   },
-  "& .MuiIconButton-root:hover": {
-    color: isDarkMode ? "#d1d5db" : "#374151",
-  },
+
   "& .MuiTablePagination-root": {
-    color: isDarkMode ? "#c4c4c4" : "#374151",
+    color: isDarkMode ? "#d1d5db" : "#1f2937",
+    background: isDarkMode ? "#1c1f3a" : "#9ca3af",
+    display: "flex",
+    alignItems: "center",
+    gap: "0.5rem",
+    "& svg": {
+      fontSize: "1.2rem",
+    },
   },
+
   "& .MuiTablePagination-selectIcon": {
-    color: isDarkMode ? "#c4c4c4" : "#6b7280",
+    color: isDarkMode ? "#1f2937" : "#111827",
   },
+
   "& .MuiDataGrid-footerContainer": {
-    borderTop: `1px solid ${isDarkMode ? "#424242" : "#e5e7eb"}`,
-    backgroundColor: isDarkMode ? "#2e2e2e" : "#f3f4f6",
+    borderTop: `1px solid ${isDarkMode ? "#4e4e6e" : "#cbd5e1"}`,
+    background: isDarkMode
+      ? "linear-gradient(to right, #1f1f3a, #2b2e4a)"
+      : "linear-gradient(to right, #111827, #ffffff)",
   },
+
   "& .MuiDataGrid-withBorderColor": {
-    borderColor: `${isDarkMode ? "#424242" : "#e5e7eb"}`,
+    borderColor: `${isDarkMode ? "#4e4e6e" : "#cbd5e1"}`,
   },
 });

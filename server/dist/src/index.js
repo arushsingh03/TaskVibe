@@ -12,6 +12,7 @@ const body_parser_1 = __importDefault(require("body-parser"));
 /* ROUTES Imports */
 const taskRoutes_1 = __importDefault(require("./routes/taskRoutes"));
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
+const teamRoutes_1 = __importDefault(require("./routes/teamRoutes"));
 const searchRoutes_1 = __importDefault(require("./routes/searchRoutes"));
 const projectRoutes_1 = __importDefault(require("./routes/projectRoutes"));
 /* Configuration */
@@ -32,6 +33,7 @@ app.use("/projects", projectRoutes_1.default);
 app.use("/tasks", taskRoutes_1.default);
 app.use("/search", searchRoutes_1.default);
 app.use("/users", userRoutes_1.default);
+app.use("/teams", teamRoutes_1.default);
 /* Server */
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

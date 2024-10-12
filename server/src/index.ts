@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 /* ROUTES Imports */
 import taskRoutes from "./routes/taskRoutes";
 import userRoutes from "./routes/userRoutes";
+import teamRoutes from "./routes/teamRoutes";
 import searchRoutes from "./routes/searchRoutes";
 import projectRoutes from "./routes/projectRoutes";
 
@@ -28,9 +29,10 @@ app.get('/', (req, res) => {
 });
 
 app.use("/projects", projectRoutes);
-app.use("/tasks", taskRoutes)
-app.use("/search", searchRoutes)
-app.use("/users", userRoutes)
+app.use("/tasks", taskRoutes);
+app.use("/search", searchRoutes);
+app.use("/users", userRoutes);
+app.use("/teams", teamRoutes);
 
 /* Server */
 const port = process.env.PORT || 3000;
