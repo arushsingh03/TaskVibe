@@ -21,53 +21,6 @@ body,
 
 /* TIMELINE STYLING */
 .timeline ._3_ygE {
-  @apply rounded-tl-md border border-r-0 border-[#e0dfdf] dark:border-[#333];
-  transition: all 0.3s ease;
-  &:hover {
-    border-color: #ff7e67; /* Highlight on hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-}
-
-.timeline ._2eZzQ {
-  @apply border-[#e0dfdf] dark:border-[#444];
-  transition: all 0.3s ease;
-}
-
-.timeline ._2dZTy {
-  @apply fill-white dark:fill-[#444];
-  transition: all 0.3s ease;
-}
-.timeline ._2dZTy:nth-child(even) {
-  @apply fill-[#f3f3f3] dark:fill-[#3a3a3a];
-  animation: bounce 0.5s ease-in-out infinite alternate;
-}
-
-/* Adding some icons for the timeline events */
-/* TIMELINE STYLING */
-.timeline ._3_ygE {
-  @apply rounded-tl-md border border-r-0 border-[#e0dfdf] dark:border-[#333];
-  transition: all 0.3s ease;
-  &:hover {
-    border-color: #ff7e67; /* Highlight on hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-}
-
-.timeline ._2eZzQ {
-  @apply border-[#e0dfdf] dark:border-[#444];
-  transition: all 0.3s ease;
-}
-
-.timeline ._2dZTy {
-  @apply fill-white dark:fill-[#444];
-}
-.timeline ._2dZTy:nth-child(even) {
-  @apply fill-[#f3f3f3] dark:fill-[#3a3a3a];
-}
-
-/* TIMELINE STYLING */
-.timeline ._3_ygE {
   @apply rounded-tl-md border border-r-0 border-[#e6e4e4] dark:border-stroke-dark;
 }
 .timeline ._2eZzQ {
@@ -111,4 +64,26 @@ body,
   height: 0px;
 }
 
+/* table scroll-bar */
 
+/* Ensure scrollbars are visible */
+.data-grid-container {
+  overflow: auto;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #c0c0c0 transparent; /* Firefox */
+}
+
+/* Webkit browsers (like Chrome) */
+.data-grid-container::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.data-grid-container::-webkit-scrollbar-thumb {
+  background-color: #c0c0c0;
+  border-radius: 2px;
+}
+
+.data-grid-container::-webkit-scrollbar-track {
+  background: transparent;
+}

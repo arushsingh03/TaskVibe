@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Header from "@/components/Header";
 import { useAppSelector } from "../redux";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
@@ -38,17 +38,29 @@ const COLORS = ["#6A1B9A", "#FF4081", "#29B6F6", "#66BB6A"];
 
 const HomePage = () => {
   const {
+    data: projects,
+    isLoading: isProjectsLoading,
+  } = useGetProjectsQuery();
+
+  // State to manage the selected project
+  const [selectedProjectId, setSelectedProjectId] = useState<number>(1); // Default to project 1
+
+  // Fetch tasks for the selected project
+  const {
     data: tasks,
     isLoading: tasksLoading,
     isError: tasksError,
-  } = useGetTasksQuery({ projectId: parseInt("1") });
-  const { data: projects, isLoading: isProjectsLoading } =
-    useGetProjectsQuery();
+  } = useGetTasksQuery({ projectId: selectedProjectId });
 
   const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
 
   if (tasksLoading || isProjectsLoading) return <div>Loading...</div>;
   if (tasksError || !tasks || !projects) return <div>Error fetching data</div>;
+
+  // Handle project change
+  const handleProjectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedProjectId(Number(event.target.value));
+  };
 
   const priorityCount = tasks.reduce(
     (acc: Record<string, number>, task: Task) => {
@@ -95,6 +107,26 @@ const HomePage = () => {
   return (
     <div className="container h-full w-full bg-gray-50 p-8 dark:bg-gray-900">
       <Header name="Project Management Dashboard" />
+      
+      {/* Dropdown for project selection */}
+      <div className="mb-4">
+        <label htmlFor="project-select" className="dark:text-white">
+          Select Project:
+        </label>
+        <select
+          id="project-select"
+          onChange={handleProjectChange}
+          value={selectedProjectId}
+          className="ml-2 rounded border p-2"
+        >
+          {projects.map((project: Project) => (
+            <option key={project.id} value={project.id}>
+              {project.name}
+            </option>
+          ))}
+        </select>
+      </div>
+      
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Task Priority Distribution */}
         <div className="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">

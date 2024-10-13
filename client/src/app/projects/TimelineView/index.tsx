@@ -3,6 +3,7 @@ import { useAppSelector } from "@/app/redux";
 import { useGetTasksQuery } from "@/state/api";
 import React, { useMemo, useState } from "react";
 import { DisplayOption, Gantt, ViewMode } from "gantt-task-react";
+import { FaPlus } from "react-icons/fa";
 
 type Props = {
   id: string;
@@ -85,7 +86,7 @@ const Timeline = ({ id, setIsModalNewTaskOpen }: Props) => {
             className="flex items-center rounded bg-blue-primary px-3 py-2 text-white hover:bg-blue-600"
             onClick={() => setIsModalNewTaskOpen(true)}
           >
-            Add New Task
+            <FaPlus className="mr-2" /> Add New Task
           </button>
         </div>
       </div>

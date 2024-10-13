@@ -2,6 +2,7 @@ import React from "react";
 import Header from "@/components/Header";
 import TaskCard from "@/components/TaskCard";
 import { Task, useGetTasksQuery } from "@/state/api";
+import { FaPlus } from "react-icons/fa";
 
 type Props = {
   id: string;
@@ -28,7 +29,7 @@ const ListView = ({ id, setIsModalNewTaskOpen }: Props) => {
               className="flex items-center rounded bg-blue-primary px-3 py-2 text-white hover:bg-blue-600"
               onClick={() => setIsModalNewTaskOpen(true)}
             >
-              Add Task
+              <FaPlus className="mr-2" /> Add Task
             </button>
           }
           isSmallText

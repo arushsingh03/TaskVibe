@@ -1,9 +1,10 @@
-import React from "react";
-import Header from "@/components/Header";
 import { useAppSelector } from "@/app/redux";
+import Header from "@/components/Header";
+import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
 import { useGetTasksQuery } from "@/state/api";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
+import React from "react";
+import { FaPlus } from "react-icons/fa";
 
 type Props = {
   id: string;
@@ -13,7 +14,7 @@ type Props = {
 const columns: GridColDef[] = [
   {
     field: "title",
-    headerName: "title",
+    headerName: "Title",
     width: 100,
   },
   {
@@ -78,30 +79,42 @@ const columns: GridColDef[] = [
     width: 130,
   },
   {
-    field: "startdate",
+    field: "startDate",
     headerName: "Start Date",
     width: 130,
+    renderCell: (params) =>
+      params.value ? (
+        <span>{new Date(params.value).toLocaleDateString()}</span>
+      ) : (
+        <span className="text-gray-500">No date</span>
+      ),
   },
   {
-    field: "duedate",
+    field: "dueDate",
     headerName: "Due Date",
     width: 130,
+    renderCell: (params) =>
+      params.value ? (
+        <span>{new Date(params.value).toLocaleDateString()}</span>
+      ) : (
+        <span className="text-gray-500">No due date</span>
+      ),
   },
   {
     field: "author",
     headerName: "Author",
     width: 150,
-    renderCell: (params) => params.value.username || "Unknown",
+    renderCell: (params) => params.value?.username || "Unknown",
   },
   {
     field: "assignee",
     headerName: "Assignee",
     width: 150,
-    renderCell: (params) => params.value.username || "Unassigned",
+    renderCell: (params) => params.value?.username || "Unassigned",
   },
 ];
 
-const Table = ({ id, setIsModalNewTaskOpen }: Props) => {
+const TableView = ({ id, setIsModalNewTaskOpen }: Props) => {
   const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
   const {
     data: tasks,
@@ -110,7 +123,7 @@ const Table = ({ id, setIsModalNewTaskOpen }: Props) => {
   } = useGetTasksQuery({ projectId: Number(id) });
 
   if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>An error occur while fetching tasks</div>;
+  if (error || !tasks) return <div>An error occurred while fetching tasks</div>;
 
   return (
     <div className="h-[540px] w-full px-4 pb-8 xl:px-6">
@@ -122,20 +135,22 @@ const Table = ({ id, setIsModalNewTaskOpen }: Props) => {
               className="flex items-center rounded bg-blue-primary px-3 py-2 text-white hover:bg-blue-600"
               onClick={() => setIsModalNewTaskOpen(true)}
             >
-              Add Task
+              <FaPlus className="mr-2" /> Add Task
             </button>
           }
           isSmallText
         />
       </div>
-      <DataGrid
-        rows={tasks || []}
-        columns={columns}
-        className={dataGridClassNames}
-        sx={dataGridSxStyles(isDarkMode)}
-      />
+      <div className="data-grid-container h-[540px] w-full px-4 pb-8 xl:px-6">
+        <DataGrid
+          rows={tasks || []}
+          columns={columns}
+          className={dataGridClassNames}
+          sx={dataGridSxStyles(isDarkMode)}
+        />
+      </div>
     </div>
   );
 };
 
-export default Table;
+export default TableView;
