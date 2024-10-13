@@ -3,8 +3,8 @@ const { Script } = require("vm");
 module.exports = {
     apps: [
         {
-            name: "task vibe",
-            Script: "npm",
+            name: "TaskVibe",
+            script: "npm",
             args: "run dev",
             env: {
                 NODE_ENV: "developement",
