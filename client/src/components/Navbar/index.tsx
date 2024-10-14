@@ -23,7 +23,7 @@ const Navbar = () => {
       console.error("Error signing out: ", error);
     }
   };
-  
+
   if (!currentUser) return null;
   const currentUserDetails = currentUser?.userDetails;
 
@@ -94,10 +94,13 @@ const Navbar = () => {
             {currentUserDetails?.username}
           </span>
           <button
-            className="flex items-center rounded-md bg-blue-primary px-3 py-2 text-white hover:bg-blue-500"
+            className="self-start rounded bg-blue-400 px-4 py-2 text-xs font-bold text-white hover:bg-blue-500 md:block"
             onClick={handleSignOut}
           >
-            <FaSignOutAlt className="mr-2 " /> Sign out
+            <span className="inline-block align-middle">
+              <FaSignOutAlt />
+            </span>
+            <span className="ml-2 inline-block align-middle">Sign out</span>
           </button>
         </div>
       </div>

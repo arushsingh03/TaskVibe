@@ -35,7 +35,7 @@ const Sidebar = () => {
   const { data: projects } = useGetProjectsQuery();
   const dispatch = useAppDispatch();
   const isSidebarCollapsed = useAppSelector(
-    (state) => state.global.isSidebarCollapsed,
+    (state) => state.global.isSidebarCollapsed
   );
 
   const { data: currentUser } = useGetAuthUserQuery({});
@@ -50,28 +50,29 @@ const Sidebar = () => {
   if (!currentUser) return null;
   const currentUserDetails = currentUser?.userDetails;
 
-  const sidebarClassName = `fixed flex flex-col h-[100%] justify-between shadow-xl transition-all duration-300 h-full z-40 dark:bg-black overflow-y-auto bg-white ${isSidebarCollapsed ? "w-0 hidden" : "w-64"}`;
+  const sidebarClassName = `fixed flex flex-col h-full justify-between shadow-xl transition-all duration-300 z-40 dark:bg-black overflow-y-auto bg-white ${isSidebarCollapsed ? "w-0 hidden" : "w-64"}`;
 
   return (
     <div className={sidebarClassName}>
-      <div className="flex h-[100%] w-full flex-col justify-start">
-        {/* top logo */}
+      <div className="flex flex-col grow">
+        {/* Top Logo */}
         <div className="z-50 flex min-h-[56px] items-center justify-between bg-white px-6 pt-3 dark:bg-black">
           <div className="text-xl font-bold text-gray-800 dark:text-white">
             DASHBOARD
           </div>
-          {isSidebarCollapsed ? null : (
+          {!isSidebarCollapsed && (
             <button
               className="py-4"
-              onClick={() => {
-                dispatch(setIsSidebarCollapsed(!isSidebarCollapsed));
-              }}
+              onClick={() =>
+                dispatch(setIsSidebarCollapsed(!isSidebarCollapsed))
+              }
             >
               <X className="h-6 w-6 text-gray-800 hover:text-gray-500 dark:text-white" />
             </button>
           )}
         </div>
-        {/* TEAM */}
+
+        {/* Team Section */}
         <div className="flex items-center gap-5 border-y-[1.5px] border-gray-200 px-8 py-4 dark:border-gray-700">
           <Image
             src="https://tv-s3-images.s3.eu-north-1.amazonaws.com/sidebaricon.gif"
@@ -89,7 +90,8 @@ const Sidebar = () => {
             </div>
           </div>
         </div>
-        {/* NavBar Links */}
+
+        {/* Navbar Links */}
         <nav className="z-10 w-full">
           <SidebarLink href="/" icon={Home} label="Home" />
           <SidebarLink href="/timeline" icon={Briefcase} label="Timeline" />
@@ -99,19 +101,14 @@ const Sidebar = () => {
           <SidebarLink href="/teams" icon={Users} label="Team" />
         </nav>
 
-        {/*Projects Links*/}
+        {/* Projects Section */}
         <button
           onClick={() => setShowProjects((prev) => !prev)}
           className="flex w-full items-center justify-between px-8 py-3 text-gray-500"
         >
-          <span className="">Projects</span>
-          {showProjects ? (
-            <ChevronUp className="h-5 w-5" />
-          ) : (
-            <ChevronDown className="h-5 w-5" />
-          )}
+          <span>Projects</span>
+          {showProjects ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
         </button>
-        {/* Project List */}
         {showProjects &&
           projects?.map((project) => (
             <SidebarLink
@@ -122,70 +119,50 @@ const Sidebar = () => {
             />
           ))}
 
-        {/* Priority Links */}
-
+        {/* Priority Section */}
         <button
           onClick={() => setShowPriority((prev) => !prev)}
           className="flex w-full items-center justify-between px-8 py-3 text-gray-500"
         >
-          <span className="">Priority</span>
-          {showPriority ? (
-            <ChevronUp className="h-5 w-5" />
-          ) : (
-            <ChevronDown className="h-5 w-5" />
-          )}
+          <span>Priority</span>
+          {showPriority ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
         </button>
         {showPriority && (
           <>
-            <SidebarLink
-              href="/priority/urgent"
-              icon={AlertCircle}
-              label="Urgent"
-            />
-            <SidebarLink
-              href="/priority/high"
-              icon={ShieldAlert}
-              label="High"
-            />
-            <SidebarLink
-              href="/priority/medium"
-              icon={AlertTriangle}
-              label="Medium"
-            />
+            <SidebarLink href="/priority/urgent" icon={AlertCircle} label="Urgent" />
+            <SidebarLink href="/priority/high" icon={ShieldAlert} label="High" />
+            <SidebarLink href="/priority/medium" icon={AlertTriangle} label="Medium" />
             <SidebarLink href="/priority/low" icon={AlertOctagon} label="Low" />
-            <SidebarLink
-              href="/priority/backlog"
-              icon={Layers3}
-              label="Backlog"
-            />
+            <SidebarLink href="/priority/backlog" icon={Layers3} label="Backlog" />
           </>
         )}
       </div>
-      <div className="z-10 mt-32 flex w-full flex-col items-center gap-4 bg-white px-8 py-4 dark:bg-black md:hidden">
-        <div className="flex w-full items-center ">
-          <div className="align-center flex h-9 w-9 justify-center">
-            {!!currentUserDetails?.profilePictureUrl ? (
-              <Image
-                src={`https://pm-s3-images.s3.us-east-2.amazonaws.com/${currentUserDetails?.profilePictureUrl}`}
-                alt={currentUserDetails?.username || "User Profile Picture"}
-                width={100}
-                height={50}
-                className="h-full rounded-full object-cover"
-              />
-            ) : (
-              <User className="h-6 w-6 cursor-pointer self-center rounded-full dark:text-white" />
-            )}
-          </div>
-          <span className="mx-3 text-gray-800 dark:text-white">
+
+      {/* Sign Out Section */}
+      <div className="flex items-center gap-4 bg-white px-8 py-4 dark:bg-black">
+        <div className="flex items-center">
+          {currentUserDetails?.profilePictureUrl ? (
+            <Image
+              src={`https://pm-s3-images.s3.us-east-2.amazonaws.com/${currentUserDetails.profilePictureUrl}`}
+              alt={currentUserDetails.username || "User Profile Picture"}
+              width={40}
+              height={40}
+              className="h-10 w-10 rounded-full object-cover"
+            />
+          ) : (
+            <User className="h-10 w-10 rounded-full text-gray-500 dark:text-white" />
+          )}
+          <span className="ml-3 text-gray-800 dark:text-white">
             {currentUserDetails?.username}
           </span>
-          <button
-            className="flex items-center rounded-md bg-blue-primary px-3 py-2 text-white hover:bg-blue-500"
-            onClick={handleSignOut}
-          >
-            <FaSignOutAlt className="mr-2 " /> Sign out
-          </button>
         </div>
+        <button
+          className="ml-auto flex items-center gap-2 rounded bg-blue-400 px-4 py-2 text-xs font-bold text-white hover:bg-blue-500"
+          onClick={handleSignOut}
+        >
+          <FaSignOutAlt />
+          <span>Sign out</span>
+        </button>
       </div>
     </div>
   );
@@ -199,22 +176,20 @@ interface SidebarLinkProps {
 
 const SidebarLink = ({ href, icon: Icon, label }: SidebarLinkProps) => {
   const pathname = usePathname();
-  const isActive =
-    pathname === href || (pathname === "/" && href === "/dashboard");
+  const isActive = pathname === href || (pathname === "/" && href === "/dashboard");
 
   return (
     <Link href={href} className="w-full">
       <div
-        className={`relative flex cursor-pointer items-center gap-3 transition-colors hover:bg-gray-100 dark:bg-black dark:hover:bg-gray-700 ${isActive ? "bg-gray-100 text-white dark:bg-gray-600" : ""} justify-start px-8 py-3`}
+        className={`relative flex items-center gap-3 px-8 py-3 transition-colors ${
+          isActive
+            ? "bg-gray-100 text-white dark:bg-gray-600"
+            : "hover:bg-gray-100 dark:hover:bg-gray-700"
+        }`}
       >
-        {isActive && (
-          <div className="absolute left-0 top-0 h-[100%] w-[5px] bg-blue-200" />
-        )}
-
+        {isActive && <div className="absolute left-0 top-0 h-full w-1 bg-blue-500" />}
         <Icon className="h-6 w-6 text-gray-800 dark:text-gray-100" />
-        <span className={`font-medium text-gray-800 dark:text-gray-100`}>
-          {label}
-        </span>
+        <span className="text-gray-800 dark:text-gray-100">{label}</span>
       </div>
     </Link>
   );
