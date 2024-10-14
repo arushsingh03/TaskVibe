@@ -94,10 +94,10 @@ const Navbar = () => {
             {currentUserDetails?.username}
           </span>
           <button
-            className="hidden rounded bg-blue-400 px-4 py-2 text-xs font-bold text-white hover:bg-blue-500 md:block"
+            className="flex items-center rounded-md bg-blue-primary px-3 py-2 text-white hover:bg-blue-500"
             onClick={handleSignOut}
           >
-            <FaSignOutAlt className="mr-2"/> Sign out
+            <FaSignOutAlt className="mr-2 " /> Sign out
           </button>
         </div>
       </div>
