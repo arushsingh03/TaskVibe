@@ -1,5 +1,3 @@
-import { BorderLeft } from "@mui/icons-material";
-
 export const dataGridClassNames = `
   border border-transparent bg-gradient-to-br from-[#d1d5db] via-[#6b7280] to-[#111827] 
   dark:from-[#2b2e4a] dark:via-[#1f1f3a] dark:to-[#1c1f3a] 

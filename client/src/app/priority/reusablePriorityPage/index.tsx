@@ -6,9 +6,9 @@ import { useAppSelector } from "@/app/redux";
 import TaskCard from "@/components/TaskCard";
 import ModalNewTask from "@/components/ModalNewTask";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { FaList, FaPlus, FaTable } from "react-icons/fa";
 import { Priority, Task, useGetTaskByUserQuery } from "@/state/api";
 import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
-import { FaList, FaPlus, FaTable } from "react-icons/fa";
 
 type Props = {
   priority: Priority;
