@@ -9,10 +9,11 @@ import ProjectCard from "@/components/ProjectCard";
 import React, { useEffect, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
-const Search = () => {
+const Search: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
+
   const {
-    data: searchResults,
+    data: searchResults = { tasks: [], projects: [], users: [] }, // Default fallback to prevent undefined errors
     isLoading,
     isError,
   } = useSearchQuery(searchTerm, {
@@ -23,12 +24,14 @@ const Search = () => {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setSearchTerm(event.target.value);
     },
-    500,
+    500
   );
 
   useEffect(() => {
-    return handleSearch.cancel;
-  }, [handleSearch.cancel]);
+    return () => {
+      handleSearch.cancel(); // Cancel debounced search on unmount
+    };
+  }, [handleSearch]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-300 to-gray-900 p-8 dark:from-gray-900 dark:to-cyan-900">
@@ -56,49 +59,52 @@ const Search = () => {
           </p>
         )}
 
-        {!isLoading && !isError && searchResults && (
+        {!isLoading && !isError && (
           <div className="space-y-10">
             {/* Tasks Section */}
-            {searchResults.tasks?.length > 0 && (
-              <div className="space-y-4">
-                <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">
-                  Tasks
-                </h2>
-                <div className="grid gap-6 md:grid-cols-2">
-                  {searchResults.tasks.map((task) => (
-                    <TaskCard key={task.id} task={task} />
-                  ))}
+            {Array.isArray(searchResults.tasks) &&
+              searchResults.tasks.length > 0 && (
+                <div className="space-y-4">
+                  <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">
+                    Tasks
+                  </h2>
+                  <div className="grid gap-6 md:grid-cols-2">
+                    {searchResults.tasks.map((task) => (
+                      <TaskCard key={task.id} task={task} />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
             {/* Projects Section */}
-            {searchResults.projects?.length > 0 && (
-              <div className="space-y-4">
-                <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">
-                  Projects
-                </h2>
-                <div className="grid gap-6 md:grid-cols-2">
-                  {searchResults.projects.map((project) => (
-                    <ProjectCard key={project.id} project={project} />
-                  ))}
+            {Array.isArray(searchResults.projects) &&
+              searchResults.projects.length > 0 && (
+                <div className="space-y-4">
+                  <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">
+                    Projects
+                  </h2>
+                  <div className="grid gap-6 md:grid-cols-2">
+                    {searchResults.projects.map((project) => (
+                      <ProjectCard key={project.id} project={project} />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
             {/* Users Section */}
-            {searchResults.users?.length > 0 && (
-              <div className="space-y-4">
-                <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">
-                  Users
-                </h2>
-                <div className="grid gap-6 md:grid-cols-2">
-                  {searchResults.users.map((user) => (
-                    <UserCard key={user.userId} user={user} />
-                  ))}
+            {Array.isArray(searchResults.users) &&
+              searchResults.users.length > 0 && (
+                <div className="space-y-4">
+                  <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">
+                    Users
+                  </h2>
+                  <div className="grid gap-6 md:grid-cols-2">
+                    {searchResults.users.map((user) => (
+                      <UserCard key={user.userId} user={user} />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
           </div>
         )}
       </div>
