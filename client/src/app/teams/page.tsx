@@ -1,9 +1,9 @@
 "use client";
 
-import { useGetTeamsQuery } from "@/state/api";
 import React from "react";
-import { useAppSelector } from "../redux";
 import Header from "@/components/Header";
+import { useAppSelector } from "../redux";
+import { useGetTeamsQuery } from "@/state/api";
 import {
   DataGrid,
   GridColDef,
@@ -15,27 +15,9 @@ import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
 
 const CustomToolbar = () => (
   <GridToolbarContainer
-    className="toolbar flex gap-2"
-    sx={{ backgroundColor: "transparent" }}
-  >
-    <GridToolbarFilterButton
-      sx={{
-        color: "white",
-        backgroundColor: "#4a90e2",
-        "&:hover": {
-          backgroundColor: "#357ABD",
-        },
-      }}
-    />
-    <GridToolbarExport
-      sx={{
-        color: "white",
-        backgroundColor: "#4a90e2",
-        "&:hover": {
-          backgroundColor: "#357ABD",
-        },
-      }}
-    />
+    className="toolbar flex gap-2">
+    <GridToolbarFilterButton/>
+    <GridToolbarExport/>
   </GridToolbarContainer>
 );
 

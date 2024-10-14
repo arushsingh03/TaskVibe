@@ -4,9 +4,10 @@ import React from "react";
 import Image from "next/image";
 import Header from "@/components/Header";
 import { useAppSelector } from "../redux";
-import { useGetUsersQuery } from "@/state/api";
+import { useGetUsersQuery, User } from "@/state/api";
 import {
   DataGrid,
+  GridColDef,
   GridToolbarContainer,
   GridToolbarExport,
   GridToolbarFilterButton,
@@ -15,19 +16,19 @@ import { dataGridSxStyles } from "@/lib/utils";
 
 const CustomToolbar = () => (
   <GridToolbarContainer className="toolbar flex gap-2">
-    <GridToolbarFilterButton/>
-    <GridToolbarExport/>
+    <GridToolbarFilterButton />
+    <GridToolbarExport />
   </GridToolbarContainer>
 );
 
-const columns = [
-  { field: "userId", headerName: "ID", width: 100 },
-  { field: "username", headerName: "Username", width: 150 },
+const columns: GridColDef<User>[] = [
+  { field: "userId", headerName: "ID", width: 100, type: "number" },
+  { field: "username", headerName: "Username", width: 150, type: "string" },
   {
     field: "profilePictureUrl",
     headerName: "Profile Picture",
     width: 100,
-    renderCell: (params: { value: any; row: { username: string } }) => (
+    renderCell: (params) => (
       <div className="flex h-full w-full items-center justify-center">
         <div className="h-9 w-9">
           <Image
@@ -35,7 +36,7 @@ const columns = [
             alt={params.row.username}
             width={40}
             height={40}
-            className="rounded-full h-full object-cover"
+            className="h-full rounded-full object-cover"
           />
         </div>
       </div>
@@ -73,18 +74,18 @@ const Users = () => {
           <DataGrid
             rows={users || []}
             columns={columns}
-            getRowId={(row) => row.userId}
+            getRowId={(row) => row.userId ?? 0} // Provide a fallback value (e.g., 0)
             pagination
             slots={{ toolbar: CustomToolbar }}
             sx={{
               ...dataGridSxStyles(isDarkMode),
               "& .MuiDataGrid-cell": {
-                backgroundColor: isDarkMode ? "#0d1117" : "#f3f4f6", // Dark content color or light alternative
-                color: isDarkMode ? "#c9d1d9" : "#1f2937", // Contrast text color
+                backgroundColor: isDarkMode ? "#0d1117" : "#f3f4f6",
+                color: isDarkMode ? "#c9d1d9" : "#1f2937",
                 borderBottom: `1px solid ${isDarkMode ? "#21262d" : "#e5e7eb"}`,
               },
               "& .MuiDataGrid-row:hover": {
-                backgroundColor: isDarkMode ? "#161b22" : "#e2e8f0", // Row hover effect
+                backgroundColor: isDarkMode ? "#161b22" : "#e2e8f0",
               },
             }}
           />
