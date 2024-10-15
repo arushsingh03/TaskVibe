@@ -11,38 +11,53 @@ import {
 } from "@heroicons/react/24/outline";
 
 const Settings = () => {
-  const [userSettings, setUserSettings] = useState({
+  const initialState = {
     username: "",
     email: "",
     teamName: "",
     roleName: "",
-  });
+  };
 
+  const [userSettings, setUserSettings] = useState(initialState);
+  const [formValues, setFormValues] = useState(initialState);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
-  useEffect(() => {
-    const fetchUserSettings = async () => {
-      // Replace with API call (e.g., fetch('/api/user'))
-      const data = {
-        username: "Arush Singh",
-        email: "sarushmad@gmail.com",
-        teamName: "Development Team C2",
-        roleName: "Developer",
-      };
-      setUserSettings(data);
-      setIsLoading(false);
-    };
-    fetchUserSettings();
-  }, []);
 
-  const iconStyle = "h-6 w-6 text-blue-500 dark:text-blue-400";
-  const cardStyle =
-    "relative flex items-center gap-4 p-5 rounded-xl shadow-md bg-white/70 dark:bg-dark-secondary/70 backdrop-blur-lg hover:scale-105 transition-transform duration-300";
+  useEffect(() => {
+    const savedSettings = localStorage.getItem("userSettings");
+    const defaultSettings = savedSettings
+      ? JSON.parse(savedSettings)
+      : {
+          username: "Username:",
+          email: "Email",
+          teamName: "Your Team:",
+          roleName: "Your Role:",
+        };
+
+    setUserSettings(defaultSettings);
+    setFormValues(defaultSettings);
+    setIsLoading(false);
+  }, []);
 
   const handleEditDetails = () => {
     setIsModalOpen(true);
   };
+
+  const handleFormChange = (e: { target: { name: any; value: any } }) => {
+    const { name, value } = e.target;
+    setFormValues((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    setUserSettings(formValues);
+    localStorage.setItem("userSettings", JSON.stringify(formValues));
+    setIsModalOpen(false);
+  };
+
+  const iconStyle = "h-6 w-6 text-blue-500 dark:text-blue-400";
+  const cardStyle =
+    "relative flex items-center gap-4 p-5 rounded-xl shadow-md bg-white/70 dark:bg-dark-secondary/70 backdrop-blur-lg hover:scale-105 transition-transform duration-300";
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-300 to-gray-800 p-8 dark:from-gray-900 dark:to-cyan-900">
@@ -108,7 +123,7 @@ const Settings = () => {
           <div className="mt-4 flex justify-center">
             <button
               onClick={handleEditDetails}
-              className="w-45 flex h-12 items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-blue-500 text-lg"
+              className="w-45 flex h-12 items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-lg font-semibold text-white transition-colors hover:bg-blue-500"
             >
               <PencilIcon className="h-6 w-6" />
               Add/Edit Details
@@ -122,54 +137,38 @@ const Settings = () => {
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 p-4">
           <div className="w-full max-w-sm rounded-lg bg-white p-8 shadow-lg">
             <h2 className="mb-4 text-xl font-bold">Edit Details</h2>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="space-y-4">
                 <input
                   type="text"
+                  name="username"
                   placeholder="Username"
-                  value={userSettings.username}
-                  onChange={(e) =>
-                    setUserSettings((prev) => ({
-                      ...prev,
-                      username: e.target.value,
-                    }))
-                  }
+                  value={formValues.username}
+                  onChange={handleFormChange}
                   className="w-full rounded-lg border p-2"
                 />
                 <input
                   type="email"
+                  name="email"
                   placeholder="Email"
-                  value={userSettings.email}
-                  onChange={(e) =>
-                    setUserSettings((prev) => ({
-                      ...prev,
-                      email: e.target.value,
-                    }))
-                  }
+                  value={formValues.email}
+                  onChange={handleFormChange}
                   className="w-full rounded-lg border p-2"
                 />
                 <input
                   type="text"
+                  name="teamName"
                   placeholder="Team Name"
-                  value={userSettings.teamName}
-                  onChange={(e) =>
-                    setUserSettings((prev) => ({
-                      ...prev,
-                      teamName: e.target.value,
-                    }))
-                  }
+                  value={formValues.teamName}
+                  onChange={handleFormChange}
                   className="w-full rounded-lg border p-2"
                 />
                 <input
                   type="text"
+                  name="roleName"
                   placeholder="Role"
-                  value={userSettings.roleName}
-                  onChange={(e) =>
-                    setUserSettings((prev) => ({
-                      ...prev,
-                      roleName: e.target.value,
-                    }))
-                  }
+                  value={formValues.roleName}
+                  onChange={handleFormChange}
                   className="w-full rounded-lg border p-2"
                 />
               </div>
