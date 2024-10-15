@@ -16,7 +16,7 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "Task Vibe",
-  description: "Created by Arush",
+  description: "Just Arush doing Arush things",
 };
 
 export default function RootLayout({

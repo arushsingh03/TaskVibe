@@ -7,7 +7,7 @@ import TaskCard from "@/components/TaskCard";
 import ModalNewTask from "@/components/ModalNewTask";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { FaList, FaPlus, FaTable } from "react-icons/fa";
-import { Priority, Task, useGetAuthUserQuery, useGetTaskByUserQuery } from "@/state/api";
+import { Priority, Task, useGetAuthUserQuery, useGetTasksByUserQuery } from "@/state/api";
 import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
 
 type Props = {
@@ -127,7 +127,7 @@ const ReusablePriorityPage = ({ priority }: Props) => {
     data: tasks,
     isLoading,
     isError: isTaskError,
-  } = useGetTaskByUserQuery(userId || 0, {
+  } = useGetTasksByUserQuery(userId || 0, {
     skip: userId === null,
   });
 
@@ -137,7 +137,7 @@ const ReusablePriorityPage = ({ priority }: Props) => {
     (task: Task) => task.priority === priority,
   );
 
-  if (isTaskError || !tasks) return <div>Error fetching taks</div>;
+  if (isTaskError || !tasks) return <div>Error fetching tasks</div>;
 
   return (
     <div className="m-5 p-4">
